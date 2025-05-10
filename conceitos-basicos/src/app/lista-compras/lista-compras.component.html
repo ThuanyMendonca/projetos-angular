@@ -1,0 +1,48 @@
+<html>
+  <div class="container">
+    <h1>Lista de compras</h1>
+
+    <form class="add-item-form" #frm="ngForm" (ngSubmit)="adicionarItem()">
+      <input
+        type="text"
+        name="item"
+        id="item"
+        [(ngModel)]="item"
+        placeholder="Digite o nome do item"
+      />
+      <button type="submit">Adicionar</button>
+      <button type="button" (click)="limparLista()">Limpar lista</button>
+    </form>
+
+    <table *ngIf="lista.length; else semItens">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Item</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let elemento of lista; index as i">
+          <td>{{ elemento.id }}</td>
+          <td>
+            <span [ngClass]="{ 'item-riscado': elemento.comprado }">
+              {{ elemento.nome }}
+            </span>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              (click)="riscarItem(elemento)"
+              [checked]="elemento.comprado"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #semItens>
+      <p>Nenhum item na lista</p>
+    </ng-template>
+  </div>
+</html>
